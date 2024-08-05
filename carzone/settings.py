@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+# Ensure Django uses UTC
+TIME_ZONE = 'UTC'
+USE_TZ = True
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -24,6 +29,7 @@ SECRET_KEY = '+scx-fyq997sx(j3+_o)g%&-qxy-nf!-tu6w_(6_&35(1cqg-c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
 
 ALLOWED_HOSTS = []
 
@@ -76,10 +82,18 @@ WSGI_APPLICATION = 'carzone.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'carzone_db',
+        'USER': 'postgres',
+        'PASSWORD': '2305',
+        'HOST': 'localhost',
+         'OPTIONS': {
+            'options': '-c timezone=UTC',
+        },
     }
 }
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Password validation
@@ -123,3 +137,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'carzone/static'),
 ]
+
+# media settings
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
